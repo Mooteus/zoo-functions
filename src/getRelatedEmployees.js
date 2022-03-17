@@ -10,7 +10,7 @@ function isManager(id) {
   if (managersArray.find((people) => people === id)) return true;
   return false;
 }
-
+// refatorar Depois
 function searchRelatedEmployees(managerId) {
   const peopleName = [];
   employees.forEach((element) => {
