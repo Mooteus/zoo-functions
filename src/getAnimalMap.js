@@ -9,13 +9,17 @@ function getAnimalPerLocation(location) {
   return animalsName;
 }
 
-function getAnimalMap(options) {
-  const objResult = {
+function renderAllAnimalsObj() {
+  return {
     NE: getAnimalPerLocation('NE'),
     NW: getAnimalPerLocation('NW'),
     SE: getAnimalPerLocation('SE'),
     SW: getAnimalPerLocation('SW'),
   };
+}
+
+function getAnimalMap(options) {
+  const objResult = renderAllAnimalsObj();
   if (!options) {
     return objResult;
   }
