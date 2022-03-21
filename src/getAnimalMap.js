@@ -18,7 +18,7 @@ function renderAllAnimalsObj() {
   };
 }
 
-function getAnimalNamePerRegion(location) {
+function getAnimalNamePerRegion(location, sex, sort) {
   let objResult = {};
   const arrayResult = [];
   const animals = species.filter((animal) => animal.location === location);
@@ -27,6 +27,7 @@ function getAnimalNamePerRegion(location) {
     element.residents.forEach((resident) => {
       animalArray.push(resident.name);
     });
+    if (sort) animalArray.sort();
     objResult[element.name] = animalArray;
     arrayResult.push(objResult);
     animalArray = [];
@@ -36,14 +37,12 @@ function getAnimalNamePerRegion(location) {
 }
 
 function getAnimalsPerName(sex, sort) {
-  if (!sex && !sort) {
-    return {
-      NE: getAnimalNamePerRegion('NE'),
-      NW: getAnimalNamePerRegion('NW'),
-      SE: getAnimalNamePerRegion('SE'),
-      SW: getAnimalNamePerRegion('SW'),
-    };
-  }
+  return {
+    NE: getAnimalNamePerRegion('NE', sex, sort),
+    NW: getAnimalNamePerRegion('NW', sex, sort),
+    SE: getAnimalNamePerRegion('SE', sex, sort),
+    SW: getAnimalNamePerRegion('SW', sex, sort),
+  };
 }
 
 function getAnimalMap(options) {
@@ -55,7 +54,7 @@ function getAnimalMap(options) {
   if (!hasIncludeName) {
     return objResult;
   }
-  return getAnimalsPerName(options.sex, options.sort);
+  return getAnimalsPerName(options.sex, options.sorted);
 }
-console.log(getAnimalMap({ includeNames: true }));
+console.log(getAnimalMap({ includeNames: true, sort: true }));
 module.exports = getAnimalMap;
