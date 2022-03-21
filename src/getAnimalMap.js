@@ -18,15 +18,44 @@ function renderAllAnimalsObj() {
   };
 }
 
+function getAnimalNamePerRegion(location) {
+  let objResult = {};
+  const arrayResult = [];
+  const animals = species.filter((animal) => animal.location === location);
+  let animalArray = [];
+  animals.forEach((element) => {
+    element.residents.forEach((resident) => {
+      animalArray.push(resident.name);
+    });
+    objResult[element.name] = animalArray;
+    arrayResult.push(objResult);
+    animalArray = [];
+    objResult = {};
+  });
+  return arrayResult;
+}
+
+function getAnimalsPerName(sex, sort) {
+  if (!sex && !sort) {
+    return {
+      NE: getAnimalNamePerRegion('NE'),
+      NW: getAnimalNamePerRegion('NW'),
+      SE: getAnimalNamePerRegion('SE'),
+      SW: getAnimalNamePerRegion('SW'),
+    };
+  }
+}
+
 function getAnimalMap(options) {
   const objResult = renderAllAnimalsObj();
   if (!options) {
     return objResult;
   }
-  const hasIncludeNames = Object.prototype.hasOwnProperty.call(options, 'includeNames');
-  if (!hasIncludeNames) {
+  const hasIncludeName = Object.prototype.hasOwnProperty.call(options, 'includeNames');
+  if (!hasIncludeName) {
     return objResult;
   }
+  return getAnimalsPerName(options.sex, options.sort);
 }
-console.log(getAnimalMap());
+console.log(getAnimalMap({ includeNames: true }));
 module.exports = getAnimalMap;
