@@ -39,8 +39,28 @@ function getAllAnimalName(location, sort) {
   return arrayResult;
 }
 
+function getAnimalNamePerSex(location, sex) {
+  let objResult = {};
+  let animalArray = [];
+  const arrayResult = [];
+  const animals = species.filter((animal) => animal.location === location);
+
+  animals.forEach((element) => {
+    element.residents.forEach((resident) => {
+      if (resident.sex === sex) animalArray.push(resident.name);
+    });
+
+    objResult[element.name] = animalArray;
+    arrayResult.push(objResult);
+    animalArray = [];
+    objResult = {};
+  });
+  return arrayResult;
+}
+
 function getAnimalNamePerRegion(location, sex, sort) {
   if (!sex) return getAllAnimalName(location, sort);
+  return getAnimalNamePerSex(location, sex);
 }
 
 function getAnimalsPerName(sex, sort) {
@@ -63,5 +83,5 @@ function getAnimalMap(options) {
   }
   return getAnimalsPerName(options.sex, options.sorted);
 }
-console.log(getAnimalMap({ includeNames: true, sort: true }));
+console.log(getAnimalMap({ includeNames: true, sex: 'female' }));
 module.exports = getAnimalMap;
