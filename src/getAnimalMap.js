@@ -39,7 +39,7 @@ function getAllAnimalName(location, sort) {
   return arrayResult;
 }
 
-function getAnimalNamePerSex(location, sex) {
+function getAnimalNamePerSex(location, sex, sort) {
   let objResult = {};
   let animalArray = [];
   const arrayResult = [];
@@ -49,6 +49,8 @@ function getAnimalNamePerSex(location, sex) {
     element.residents.forEach((resident) => {
       if (resident.sex === sex) animalArray.push(resident.name);
     });
+
+    if (sort) animalArray.sort();
 
     objResult[element.name] = animalArray;
     arrayResult.push(objResult);
@@ -60,7 +62,7 @@ function getAnimalNamePerSex(location, sex) {
 
 function getAnimalNamePerRegion(location, sex, sort) {
   if (!sex) return getAllAnimalName(location, sort);
-  return getAnimalNamePerSex(location, sex);
+  return getAnimalNamePerSex(location, sex, sort);
 }
 
 function getAnimalsPerName(sex, sort) {
