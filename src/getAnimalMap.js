@@ -18,22 +18,29 @@ function renderAllAnimalsObj() {
   };
 }
 
-function getAnimalNamePerRegion(location, sex, sort) {
+function getAllAnimalName(location, sort) {
   let objResult = {};
+  let animalArray = [];
   const arrayResult = [];
   const animals = species.filter((animal) => animal.location === location);
-  let animalArray = [];
+
   animals.forEach((element) => {
     element.residents.forEach((resident) => {
       animalArray.push(resident.name);
     });
+
     if (sort) animalArray.sort();
+
     objResult[element.name] = animalArray;
     arrayResult.push(objResult);
     animalArray = [];
     objResult = {};
   });
   return arrayResult;
+}
+
+function getAnimalNamePerRegion(location, sex, sort) {
+  if (!sex) return getAllAnimalName(location, sort);
 }
 
 function getAnimalsPerName(sex, sort) {
