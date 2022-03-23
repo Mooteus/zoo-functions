@@ -36,11 +36,14 @@ function getAllSchedule() {
 }
 
 function getSchedule(scheduleTarget) {
-  if (!scheduleTarget) {
-    return getAllSchedule();
-  }
+  const days = Object.keys(hours);
+  const isDay = days.some((day) => day === scheduleTarget);
+  const isAnimal = species.some((animal) => animal.name === scheduleTarget);
+
+  if (!scheduleTarget) return getAllSchedule();
+  if (!isDay && !isAnimal) return getAllSchedule();
 }
 
-console.log(getSchedule());
+console.log(getSchedule('teste'));
 
 module.exports = getSchedule;
