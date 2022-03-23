@@ -17,6 +17,11 @@ function getHours(days) {
   return objResult;
 }
 
+function getAnimalSchedule(string) {
+  const animal = species.find((animals) => animals.name === string);
+  return animal.availability;
+}
+
 function getDays(string) {
   let days = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'];
   if (string) days = [string];
@@ -46,14 +51,14 @@ function getSchedule(scheduleTarget) {
   const isDay = days.some((day) => day === scheduleTarget);
   const isAnimal = species.some((animal) => animal.name === scheduleTarget);
 
-  if (!scheduleTarget) return getAllSchedule();
   if (!isDay && !isAnimal) return getAllSchedule();
+  if (isAnimal) return getAnimalSchedule(scheduleTarget);
   if (scheduleTarget === 'Monday') {
     return { Monday: { officeHour: 'CLOSED', exhibition: 'The zoo will be closed!' } };
   }
   return getAllSchedule(scheduleTarget);
 }
 
-console.log(getSchedule('Saturday'));
+console.log(getSchedule('lions'));
 
 module.exports = getSchedule;
