@@ -42,6 +42,9 @@ function getSchedule(scheduleTarget) {
 
   if (!scheduleTarget) return getAllSchedule();
   if (!isDay && !isAnimal) return getAllSchedule();
+  if (scheduleTarget === 'Monday') {
+    return { Monday: { officeHour: 'CLOSED', exhibition: 'The zoo will be closed!' } };
+  }
 }
 
 console.log(getSchedule('teste'));
