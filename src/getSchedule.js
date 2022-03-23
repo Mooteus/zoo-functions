@@ -17,8 +17,14 @@ function getHours(days) {
   return objResult;
 }
 
-function getAllSchedule() {
-  const days = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'];
+function getDays(string) {
+  let days = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'];
+  if (string) days = [string];
+  return days;
+}
+
+function getAllSchedule(string) {
+  const days = getDays(string);
   const objResult = getHours(days);
   let availabilityArray = [];
 
@@ -45,8 +51,9 @@ function getSchedule(scheduleTarget) {
   if (scheduleTarget === 'Monday') {
     return { Monday: { officeHour: 'CLOSED', exhibition: 'The zoo will be closed!' } };
   }
+  return getAllSchedule(scheduleTarget);
 }
 
-console.log(getSchedule('teste'));
+console.log(getSchedule('Saturday'));
 
 module.exports = getSchedule;
