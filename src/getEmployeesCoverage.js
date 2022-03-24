@@ -1,27 +1,6 @@
 const { employees } = require('../data/zoo_data');
 const { species } = require('../data/zoo_data');
 
-function getPeopleInfo(obj) {
-  let employee = employees.find((emp) => emp.firstName === obj.name);
-  if (!employee) employee = employees.find((emp) => emp.lastName === obj.name);
-  if (!employee) employee = employees.find((emp) => emp.id === obj.id);
-  if (!employee) throw new Error('Informações inválidas');
-
-  const locationArray = [];
-  const animalNameArray = [];
-
-  employee.responsibleFor.forEach((element) => {
-    locationArray.push(species.find((animal) => animal.id === element).location);
-    animalNameArray.push(species.find((animal) => animal.id === element).name);
-  });
-
-  return {
-    id: employee.id,
-    fullName: `${employee.firstName} ${employee.lastName}`,
-    species: animalNameArray,
-    locations: locationArray };
-}
-
 function getAnimalLocation(responsibleFor) {
   const locationArray = [];
   responsibleFor.forEach((resp) => {
@@ -36,6 +15,19 @@ function getAnimalName(responsibleFor) {
     animalNameArray.push(species.find((animal) => animal.id === resp).name);
   });
   return animalNameArray;
+}
+
+function getPeopleInfo(obj) {
+  let employee = employees.find((emp) => emp.firstName === obj.name);
+  if (!employee) employee = employees.find((emp) => emp.lastName === obj.name);
+  if (!employee) employee = employees.find((emp) => emp.id === obj.id);
+  if (!employee) throw new Error('Informações inválidas');
+
+  return {
+    id: employee.id,
+    fullName: `${employee.firstName} ${employee.lastName}`,
+    species: getAnimalName(employee.responsibleFor),
+    locations: getAnimalLocation(employee.responsibleFor) };
 }
 
 function getAllPeopleInfo() {
