@@ -32,6 +32,4 @@ function countAnimals(animal) {
   return searchAnimalPerNameAndSex(animal.specie, animal.sex);
 }
 
-console.log(countAnimals({ specie: 'bears', sex: 'male' }));
-
 module.exports = countAnimals;

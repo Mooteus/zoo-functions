@@ -85,5 +85,5 @@ function getAnimalMap(options) {
   }
   return getAnimalsPerName(options.sex, options.sorted);
 }
-console.log(getAnimalMap({ includeNames: true, sex: 'female' }));
+
 module.exports = getAnimalMap;

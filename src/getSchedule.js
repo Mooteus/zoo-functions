@@ -59,6 +59,4 @@ function getSchedule(scheduleTarget) {
   return getAllSchedule(scheduleTarget);
 }
 
-console.log(getSchedule('lions'));
-
 module.exports = getSchedule;
