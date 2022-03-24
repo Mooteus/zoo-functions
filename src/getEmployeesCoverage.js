@@ -4,7 +4,7 @@ const { species } = require('../data/zoo_data');
 function getPeopleInfo(obj) {
   let employee = employees.find((emp) => emp.firstName === obj.name);
   if (!employee) employee = employees.find((emp) => emp.lastName === obj.name);
-
+  if (!employee) employee = employees.find((emp) => emp.id === obj.id);
   const locationArray = [];
   const animalNameArray = [];
 
@@ -21,11 +21,9 @@ function getPeopleInfo(obj) {
 }
 
 function getEmployeesCoverage(obj) {
-  if (Object.prototype.hasOwnProperty.call(obj, 'name')) {
-    return getPeopleInfo(obj);
-  }
+  return getPeopleInfo(obj);
 }
 
-console.log(getEmployeesCoverage({ name: 'Strauss' }));
+console.log(getEmployeesCoverage({ id: 'c1f50212-35a6-4ecd-8223-f835538526c2' }));
 
 module.exports = getEmployeesCoverage;
