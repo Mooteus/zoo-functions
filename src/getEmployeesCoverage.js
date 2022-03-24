@@ -5,6 +5,8 @@ function getPeopleInfo(obj) {
   let employee = employees.find((emp) => emp.firstName === obj.name);
   if (!employee) employee = employees.find((emp) => emp.lastName === obj.name);
   if (!employee) employee = employees.find((emp) => emp.id === obj.id);
+  if (!employee) throw new Error('Informações inválidas');
+
   const locationArray = [];
   const animalNameArray = [];
 
@@ -20,10 +22,42 @@ function getPeopleInfo(obj) {
     locations: locationArray };
 }
 
-function getEmployeesCoverage(obj) {
-  return getPeopleInfo(obj);
+function getAnimalLocation(responsibleFor) {
+  const locationArray = [];
+  responsibleFor.forEach((resp) => {
+    locationArray.push(species.find((animal) => animal.id === resp).location);
+  });
+  return locationArray;
 }
 
-console.log(getEmployeesCoverage({ id: 'c1f50212-35a6-4ecd-8223-f835538526c2' }));
+function getAnimalName(responsibleFor) {
+  const animalNameArray = [];
+  responsibleFor.forEach((resp) => {
+    animalNameArray.push(species.find((animal) => animal.id === resp).name);
+  });
+  return animalNameArray;
+}
+
+function getAllPeopleInfo() {
+  let objResult = {};
+  const arrayResult = [];
+
+  employees.forEach((element) => {
+    objResult.id = element.id;
+    objResult.fullName = `${element.firstName} ${element.lastName}`;
+    objResult.species = getAnimalName(element.responsibleFor);
+    objResult.locations = getAnimalLocation(element.responsibleFor);
+    arrayResult.push(objResult);
+    objResult = {};
+  });
+  return arrayResult;
+}
+
+function getEmployeesCoverage(obj) {
+  if (!obj) {
+    return getAllPeopleInfo();
+  }
+  return getPeopleInfo(obj);
+}
 
 module.exports = getEmployeesCoverage;
